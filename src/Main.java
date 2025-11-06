@@ -31,25 +31,23 @@ public class Main {
 
         //TODO: 4) Deserializar la lista desde el fichero
         ObjectInputStream ois;
+        ArrayList<Persona> personasLeidas;
         try {
             ois = new ObjectInputStream(new FileInputStream(FICHERO));
+            Object tmp =  ois.readObject();
+            personasLeidas = (ArrayList<Persona>) tmp;
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Fichero no encontrado. " + e);
         } catch (IOException e) {
+            throw new RuntimeException("" + e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
         //TODO: 5) Imprimir por consola las personas deserializadas
-        try {
-            //Primero leer el archivo y deserializarlo:
-            Object tmp = ois.readObject();
-            ArrayList<Persona> personasLeidas = (ArrayList<Persona>) tmp;
-
-            for (Persona persona : personasLeidas) {
-                System.out.println(persona);
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        for (Persona persona : personasLeidas) {
+            System.out.println(persona);
         }
     }
 }
